@@ -2,10 +2,10 @@
     <div>
         <div class="pt-5 space-y-6">
 
-            <h2>{{ data.username }}</h2>
+            <!-- <h2>{{ data.username }}</h2> -->
             <UIInput label="Username" placeholder="username" v-model="data.username" />
 
-            <h2>{{ data.password }}</h2>
+            <!-- <h2>{{ data.password }}</h2> -->
             <UIInput label="Password" placeholder="password" type="password" v-model="data.password" />
 
             <div>
