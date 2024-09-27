@@ -82,6 +82,18 @@
                         More
                     </template>
                 </SidebarLeftTab>
+
+                <div class="hidden xl:block">
+                    <UIBlueButton liquid size="lg" class="font-bold">Post</UIBlueButton>
+                </div>
+
+                <div class="block xl:hidden">
+                    <UIBlueButton class="font-bold">
+                        <div class="w-6 h-6">
+                            <PencilIcon />
+                        </div>
+                    </UIBlueButton>
+                </div>
         </div>
 
     </div>
@@ -91,7 +103,7 @@
 
 import {HomeIcon} from "@heroicons/vue/16/solid"
 
-import {HashtagIcon, BellIcon, InboxIcon, BookmarkIcon, DocumentTextIcon, UserIcon, PlusIcon  } from "@heroicons/vue/24/outline"
+import {HashtagIcon, BellIcon, InboxIcon, BookmarkIcon, DocumentTextIcon, UserIcon, PlusIcon, PencilIcon  } from "@heroicons/vue/24/outline"
 
 const {defaultTransition} = useTailwindConfig()
 

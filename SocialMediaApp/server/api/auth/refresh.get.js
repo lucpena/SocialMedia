@@ -38,7 +38,7 @@ export default defineEventHandler( async(event) =>
     } catch (error) {
         return sendError(event, createError({
             statusCode: 500,
-            statusMessage: 'Something went wrong in refresh.get.js'
+            statusMessage: 'Login expired.'
         }));
     }
 });

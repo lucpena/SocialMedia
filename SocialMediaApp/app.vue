@@ -2,9 +2,11 @@
 <div :class="{ 'dark': darkMode }">
 
   <div class="bg-neutral-100 dark:bg-dim-900">
+  
+    <LoadingPage v-if="isAuthLoading" />
 
     <!-- Main App -->
-    <div class="min-h-full" v-if="user">
+    <div class="min-h-full" v-else-if="user">
       <div class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-5">
 
         <!-- Left Sidebar -->
@@ -40,7 +42,8 @@
 <script setup>
 
 const darkMode = ref(false);
-const {useAuthUser, initAuth} = useAuth();
+const {useAuthUser, initAuth, useAuthLoading} = useAuth();
+const isAuthLoading = useAuthLoading()
 const user = useAuthUser()
 
 onBeforeMount(() => {
