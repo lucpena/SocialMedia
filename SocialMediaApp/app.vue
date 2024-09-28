@@ -1,7 +1,7 @@
 <template>
 <div :class="{ 'dark': darkMode }">
 
-  <div class="bg-neutral-100 dark:bg-dim-900">
+  <div class="bg-neutral-50 dark:bg-dim-900">
   
     <LoadingPage v-if="isAuthLoading" />
 
@@ -10,20 +10,19 @@
       <div class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-5">
 
         <!-- Left Sidebar -->
-        <div class="hidden md:block xs-col-span-1 xl:col-span-2 border-2 border-red-500/30">
+        <div class="hidden md:block xs-col-span-1 xl:col-span-2">
             <div class="sticky top-0">
               <SidebarLeft />
             </div>
         </div>
       
         <!-- Main Content -->
-        <main class="col-span-12 md:col-span-8 xl:col-span-6 border-2 border-green-500/30">
+        <main class="col-span-12 md:col-span-8 xl:col-span-6">
           <router-view />
         </main>
 
-
         <!-- Right Sidebar -->
-        <div class="hidden md:block xl:col-span-4 md:col-span-3 border-2 border-blue-500/30">
+        <div class="hidden md:block xl:col-span-4 md:col-span-3">
             <div class="sticky top-0">
               <SidebarRight />
             </div>
