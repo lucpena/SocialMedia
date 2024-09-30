@@ -40,6 +40,8 @@
 
 <script setup>
 
+require("dotenv").config();
+
 const darkMode = ref(false);
 const {useAuthUser, initAuth, useAuthLoading} = useAuth();
 const isAuthLoading = useAuthLoading()
