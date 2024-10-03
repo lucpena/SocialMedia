@@ -9,6 +9,6 @@
   </svg> -->
   <div class="flex flex-col">
     <img src="https://cdn.betterttv.net/emote/5805580c3d506fea7ee357d6/3x.webp" alt="">
-    <p>it's loading bro...</p>
+    <p class="text-center">loading...</p>
   </div>
 </template>
