@@ -7,6 +7,7 @@
         </div>
 
         <div v-else>
+            <TweetItem :tweet="props.replyTo" v-if="props.replyTo && props.showReply" hideActions />
             <TweetFormInput :placeholder="props.placeholder" :user="props.user" @onSubmit="handleFormSubmit" />
         </div>      
 
@@ -31,6 +32,10 @@ const props = defineProps({
     replyTo: {
         type: Object,
         default: null
+    },
+    showReply: {
+        type: Boolean,
+        default: false
     }
 });
 

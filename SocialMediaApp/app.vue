@@ -31,7 +31,7 @@
       </div>
 
       <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
-        <TweetForm :user="user" @on-sucess="handleFormSucess" />
+        <TweetForm :user="user" :replyTo="replyTweet" showReply @on-sucess="handleFormSucess" />
       </UIModal>
 
     </div>
@@ -50,10 +50,16 @@ const darkMode = ref(false);
 const {useAuthUser, initAuth, useAuthLoading} = useAuth();
 const isAuthLoading = useAuthLoading();
 const user = useAuthUser();
-
-const { closePostTweetModal, usePostTweetModal, openPostTweetModal } = useTweets()
+const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
 const postTweetModal = usePostTweetModal();
+const emitter = useEmitter();
+const replyTweet = useReplyTweet();
 
+
+emitter.$on('replyTweet', (tweet) => 
+{
+  openPostTweetModal(tweet);
+});
 
 onBeforeMount(() => {
   initAuth();
@@ -62,6 +68,10 @@ onBeforeMount(() => {
 function handleFormSucess(tweet)
 {
   closePostTweetModal();
+
+  navigateTo({
+    path: `/status/${tweet.id}`
+  })
 }
 
 function handleModalClose()
@@ -71,7 +81,7 @@ function handleModalClose()
 
 function handleOpenTweetModal()
 {
-  openPostTweetModal();
+  openPostTweetModal(null);
 }
 
 </script>

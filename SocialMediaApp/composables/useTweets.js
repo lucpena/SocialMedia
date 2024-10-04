@@ -19,13 +19,14 @@ export default () =>
         )
     }
 
-    const getHomeTweets = () =>
+    const getTweets = (params = {}) =>
     {
         return new Promise(async (resolve, reject) => 
         {
             try {
                 const response = await useFetchApi('/api/tweets', {
-                    method: 'GET'
+                    method: 'GET',
+                    params
                 })
 
                 resolve(response);
@@ -51,25 +52,35 @@ export default () =>
 
     
     const usePostTweetModal = () => useState('post_tweet_modal', () => false);    
-    
+    const useReplyTweet = () => useState('replyTweet',  () => null);
+
     const closePostTweetModal = () =>
     {
         const postTweetModal = usePostTweetModal();
         postTweetModal.value = false;
     }
 
-    const openPostTweetModal = () =>
+    const openPostTweetModal = (tweet = null) =>
     {
         const postTweetModal = usePostTweetModal();
         postTweetModal.value = true;
+
+        setReplyTo(tweet);
+    }
+
+    const setReplyTo = (tweet) =>
+    {
+        const replyTweet = useReplyTweet();
+        replyTweet.value = tweet;
     }
         
     return {
         postTweet,
         getTweetById,
-        getHomeTweets,
+        getTweets,
         closePostTweetModal,
         usePostTweetModal,
-        openPostTweetModal
+        openPostTweetModal,
+        useReplyTweet
     }
 }

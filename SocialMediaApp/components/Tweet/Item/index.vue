@@ -17,8 +17,8 @@
                     <img :src="image.url" alt="Post image" class="w-full rounded-2xl">
             </div>
             
-            <div class="mt-2">
-                <TweetItemActions :tweet="props.tweet" :compact="props.compact" />
+            <div class="mt-2" v-if="!props.hideActions">
+                <TweetItemActions :tweet="props.tweet" :compact="props.compact" @on-comment-click="handleCommentClick" />
             </div>
 
         </div>
@@ -27,7 +27,9 @@
 </template>
 <script setup>
 
-const { twitterBorderColor } = useTailwindConfig()
+const { twitterBorderColor } = useTailwindConfig();
+
+const emitter = useEmitter();
 
 const props = defineProps(
     {
@@ -38,6 +40,10 @@ const props = defineProps(
         compact: {
             type: Boolean,
             default: false
+        },
+        hideActions: {
+            type: Boolean,
+            default: false
         }
     }
 )
@@ -45,5 +51,9 @@ const props = defineProps(
 const tweetBodyWrapper = computed(() => props.compact ? 'ml-16' : 'ml-2 mt-4');
 
 const textSize = computed(() => props.compact ? 'text-base' : 'text-2xl');
+
+function handleCommentClick() {
+    emitter.$emit('replyTweet', props.tweet);
+}
 
 </script>
