@@ -12,7 +12,7 @@
         <!-- Left Sidebar -->
         <div class="hidden md:block xs-col-span-1 xl:col-span-2">
             <div class="sticky top-0">
-              <SidebarLeft @on-tweet="handleOpenTweetModal" />
+              <SidebarLeft @on-tweet="handleOpenTweetModal" :user="user" @on-logout="handleLogout" />
             </div>
         </div>
       
@@ -31,7 +31,10 @@
       </div>
 
       <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
-        <TweetForm :user="user" :replyTo="replyTweet" showReply @on-sucess="handleFormSucess" />
+        <TweetForm :user="user" 
+                   :replyTo="replyTweet" 
+                   showReply 
+                   @on-sucess="handleFormSucess"/>
       </UIModal>
 
     </div>
@@ -47,7 +50,7 @@
 <script setup>
 const darkMode = ref(false);
 
-const {useAuthUser, initAuth, useAuthLoading} = useAuth();
+const {useAuthUser, initAuth, useAuthLoading, logout} = useAuth();
 const isAuthLoading = useAuthLoading();
 const user = useAuthUser();
 const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
@@ -55,10 +58,14 @@ const postTweetModal = usePostTweetModal();
 const emitter = useEmitter();
 const replyTweet = useReplyTweet();
 
-
 emitter.$on('replyTweet', (tweet) => 
 {
   openPostTweetModal(tweet);
+});
+
+emitter.$on('toggleDarkMode', () => 
+{
+ darkMode.value = !darkMode.value;
 });
 
 onBeforeMount(() => {
@@ -82,6 +89,11 @@ function handleModalClose()
 function handleOpenTweetModal()
 {
   openPostTweetModal(null);
+}
+
+function handleLogout()
+{
+  logout();
 }
 
 </script>

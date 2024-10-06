@@ -12,32 +12,33 @@
     </div>
 </template>
 <script setup>
+const { getTweets: getTweetsComposable } = useTweets()
 
-const { getTweets } = useTweets();
+const loading = ref(false)
+const searchTweets = ref([])
+const searchQuery = useRoute().query.q
 
-const loading = ref(false);
-const searchTweets = ref([]);
-
-const searchQuery = useRoute().query.q;
+watch(() => useRoute().fullPath, () => getTweets())
 
 
-onBeforeMount(async () =>
-{
-    loading.value = true;
-
-    try {
-        const {tweets} = await getTweets({
-            query: searchQuery
-        });
-
-        searchTweets.value = tweets;
-
-    } catch (error) {
-        console.log(error);
-    } finally {
-        loading.value = false;
-    }
-
+onBeforeMount(() => {
+    getTweets()
 })
+
+async function getTweets() {
+    loading.value = true
+    try {
+        const { tweets } = await getTweetsComposable({
+            query: searchQuery
+        })
+
+        searchTweets.value = tweets
+    } catch (error) {
+        console.log(error)
+    } finally {
+        loading.value = false
+    }
+}
+
 
 </script>

@@ -1,9 +1,10 @@
-import { getTweets } from "~/server/db/tweets";
-import { tweetTransformer } from "~/server/transformers/tweet";
+import { getTweets } from "~~/server/db/tweets"
+import { tweetTransformer } from "~~/server/transformers/tweet"
 
-export default defineEventHandler(async (event) =>
-{
-    const tweets = await getTweets({
+export default defineEventHandler(async (event) => {
+    const { query } = getQuery(event);
+
+    let primsaQuery = {
         include: {
             author: true,
             mediaFiles: true,
@@ -23,7 +24,21 @@ export default defineEventHandler(async (event) =>
                 createdAt: 'desc'
             }
         ]
-    });
+    }
+
+    if (!!query) {
+        primsaQuery = {
+            ...primsaQuery,
+            where: {
+                text: {
+                    contains: query
+                }
+            }
+        }
+    }
+
+    const tweets = await getTweets(primsaQuery)
+
 
     return {
         tweets: tweets.map(tweetTransformer)
